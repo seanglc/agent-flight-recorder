@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Agent Flight Recorder cover image">
+  <rect width="1280" height="720" fill="#eef2f6"/>
+  <rect x="70" y="72" width="1140" height="576" rx="28" fill="#ffffff" stroke="#d8dee8" stroke-width="2"/>
+  <rect x="70" y="72" width="1140" height="88" rx="28" fill="#0e6b68"/>
+  <rect x="70" y="132" width="1140" height="28" fill="#0e6b68"/>
+  <text x="112" y="128" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="38" font-weight="800">Agent Flight Recorder</text>
+  <text x="876" y="125" fill="#d9f4ef" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">AI Governance Audit Trail</text>
+
+  <rect x="112" y="204" width="322" height="348" rx="16" fill="#f7fafc" stroke="#d8dee8"/>
+  <text x="140" y="252" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">Agent Run</text>
+  <text x="140" y="292" fill="#657183" font-family="Inter, Arial, sans-serif" font-size="20">Transcript + tool log</text>
+  <rect x="140" y="328" width="246" height="28" rx="8" fill="#dbeafe"/>
+  <text x="154" y="349" fill="#275c9f" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">git push / external write</text>
+  <rect x="140" y="372" width="220" height="28" rx="8" fill="#ffe2c2"/>
+  <text x="154" y="393" fill="#712f00" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">payment / bounty action</text>
+  <rect x="140" y="416" width="250" height="28" rx="8" fill="#f7d5dc"/>
+  <text x="154" y="437" fill="#a32638" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">credential-like secret</text>
+  <rect x="140" y="460" width="210" height="28" rx="8" fill="#fff0d6"/>
+  <text x="154" y="481" fill="#6b3f00" font-family="Inter, Arial, sans-serif" font-size="17" font-weight="700">missing approval</text>
+
+  <path d="M470 372 C548 372 548 372 626 372" fill="none" stroke="#0e6b68" stroke-width="9" stroke-linecap="round"/>
+  <path d="M614 350 L646 372 L614 394" fill="none" stroke="#0e6b68" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="680" y="204" width="418" height="348" rx="16" fill="#fbfcfe" stroke="#d8dee8"/>
+  <text x="708" y="252" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">Risk Review</text>
+  <rect x="708" y="286" width="142" height="54" rx="12" fill="#a32638"/>
+  <text x="740" y="322" fill="#ffffff" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800">DENY</text>
+  <text x="876" y="322" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="800">Score 100</text>
+
+  <line x1="708" y1="374" x2="1062" y2="374" stroke="#d8dee8" stroke-width="2"/>
+  <circle cx="726" cy="414" r="10" fill="#a32638"/>
+  <text x="752" y="421" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Secret redacted</text>
+  <circle cx="726" cy="462" r="10" fill="#b85c00"/>
+  <text x="752" y="469" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Human review required</text>
+  <circle cx="726" cy="510" r="10" fill="#275c9f"/>
+  <text x="752" y="517" fill="#17202a" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700">Lobster Trap policy pack</text>
+
+  <rect x="112" y="584" width="986" height="32" rx="16" fill="#e8f7ed"/>
+  <text x="140" y="607" fill="#287a45" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="800">Audit trails for agents that read files, call APIs, push code, and trigger business actions.</text>
+</svg>

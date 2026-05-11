@@ -6,11 +6,11 @@ AI agents are starting to touch real enterprise systems: code repositories, emai
 
 ## 0:15 - 0:35
 
-This is Agent Flight Recorder. It turns an AI-agent transcript or tool log into a security audit trail. I am loading a realistic run where a user asked an agent to find a bounty, the agent touched GitHub, and a credential was exposed.
+This is Agent Flight Recorder. It turns an AI-agent transcript, tool log, or Lobster Trap-style audit stream into a security audit trail. The default run shows an adversarial agent workflow: prompt injection, sensitive file access, exfiltration, and dangerous shell commands.
 
 ## 0:35 - 1:00
 
-The system immediately returns a DENY decision with a critical risk score. It flags economic action, external writes, missing approval, and credential exposure. The token is redacted before it appears in the audit output.
+The system immediately returns a DENY decision with a critical risk score. It flags prompt injection, exfiltration, sensitive paths, dangerous commands, and missing approval. Any credential-like value is redacted before it appears in copied or downloaded reports.
 
 ## 1:00 - 1:25
 
@@ -18,8 +18,8 @@ The timeline shows exact evidence rows by transcript line. This matters for ente
 
 ## 1:25 - 1:45
 
-The brief tab turns the trace into an executive remediation plan: rotate exposed credentials, require approval before GitHub or email writes, and route payment or bounty actions to human review.
+The brief tab turns the trace into an executive remediation plan: deny sensitive filesystem access, quarantine exfiltration attempts, block dangerous shell commands, and require approval before high-impact actions.
 
 ## 1:45 - 2:00
 
-Finally, the policy tab exports a Lobster Trap-style policy pack. The goal is to make agent security review concrete: every run gets a risk decision, evidence trail, redaction, and policy update path.
+Finally, the Lobster Log sample shows the sponsor fit: inline DENY and QUARANTINE events become a readable incident brief. The policy tab exports a starter pack for hardening the next run. The goal is concrete governance: every agent run gets a risk decision, evidence trail, redaction, and policy update path.

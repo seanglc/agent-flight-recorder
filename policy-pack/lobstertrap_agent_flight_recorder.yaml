@@ -1,0 +1,105 @@
+version: "1.0"
+policy_name: "agent-flight-recorder-enterprise"
+default_action: ALLOW
+
+ingress_rules:
+  - name: deny_agent_secret_leak
+    description: "Agent run contains credentials or tokens"
+    priority: 120
+    action: DENY
+    deny_message: "[AGENT FLIGHT RECORDER] Blocked: credential exposure detected."
+    conditions:
+      - field: contains_credentials
+        match_type: boolean
+        value: true
+
+  - name: deny_prompt_injection
+    description: "Prompt injection attempt detected"
+    priority: 110
+    action: DENY
+    deny_message: "[AGENT FLIGHT RECORDER] Blocked: prompt injection detected."
+    conditions:
+      - field: contains_injection_patterns
+        match_type: boolean
+        value: true
+
+  - name: quarantine_exfiltration
+    description: "External data movement detected"
+    priority: 105
+    action: QUARANTINE
+    conditions:
+      - field: contains_exfiltration
+        match_type: boolean
+        value: true
+
+  - name: review_external_writes
+    description: "Agent action can change an external system"
+    priority: 88
+    action: HUMAN_REVIEW
+    conditions:
+      - field: risk_score
+        match_type: threshold
+        value: 0.45
+      - field: intent_category
+        match_type: exact
+        value: "communication"
+
+  - name: review_financial_actions
+    description: "Financial, trading, bounty, wallet, or payment workflow requires approval"
+    priority: 86
+    action: HUMAN_REVIEW
+    conditions:
+      - field: risk_score
+        match_type: threshold
+        value: 0.35
+
+  - name: log_routine_agent_activity
+    description: "Baseline logging for routine agent operations"
+    priority: 20
+    action: LOG
+    conditions:
+      - field: token_count
+        match_type: threshold
+        value: 1
+
+egress_rules:
+  - name: block_credential_leak
+    description: "Model output contains credentials"
+    priority: 100
+    action: DENY
+    deny_message: "[AGENT FLIGHT RECORDER] Output blocked: contains credentials."
+    conditions:
+      - field: contains_credentials
+        match_type: boolean
+        value: true
+
+  - name: block_pii_leak
+    description: "Model output contains PII"
+    priority: 90
+    action: DENY
+    deny_message: "[AGENT FLIGHT RECORDER] Output blocked: contains PII."
+    conditions:
+      - field: contains_pii
+        match_type: boolean
+        value: true
+
+network:
+  egress_policy: allowlist
+  allowed_domains:
+    - "api.openai.com"
+    - "api.anthropic.com"
+    - "generativelanguage.googleapis.com"
+  denied_domains:
+    - "pastebin.com"
+    - "*.onion"
+
+filesystem:
+  denied_paths:
+    - "**/.ssh/**"
+    - "**/.env"
+    - "**/*secret*"
+    - "**/*password*"
+  allowed_read_paths:
+    - "/tmp/agent_workspace/**"
+  allowed_write_paths:
+    - "/tmp/agent_workspace/agent_output/**"

@@ -1,0 +1,7 @@
+User: Please summarize this customer-support thread.
+Assistant: Read the provided transcript and created a short action list.
+Tool: read file support-thread.txt
+Tool: summarize conversation
+Assistant: No external systems were changed.
+Assistant: The only detected email addresses were redacted in the final brief.
+User: Approved.

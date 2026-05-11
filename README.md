@@ -2,7 +2,7 @@
 
 Hackathon prototype for lablab.ai Transforming Enterprise Through AI, Track 1: Agent Security & AI Governance.
 
-Agent Flight Recorder is the post-run audit layer for AI agents. It reviews raw agent transcripts, tool logs, and Lobster Trap-style JSONL audit events for enterprise governance signals:
+Agent Flight Recorder is the black-box recorder for AI-agent runs. It reviews raw agent transcripts, tool logs, and Lobster Trap-style JSONL audit events for enterprise governance signals:
 
 - leaked secrets or credential-like strings
 - prompt injection and exfiltration attempts
@@ -19,6 +19,12 @@ The app produces:
 - Lobster Trap-compatible policy pack draft
 - redacted markdown audit report
 - JSONL audit-log ingestion for inline policy events
+
+## Origin Story
+
+This started from a real workflow: an AI coding agent was asked to find a bounty-like task, pushed code to GitHub, opened a pull request, interacted with review bots, and then a credential-like token was accidentally pasted into the conversation. The painful part was not only the secret exposure. It was that the run mixed human intent, agent action, bots, external writes, and economic motivation into one messy trace.
+
+Agent Flight Recorder is the audit artifact that should exist after that kind of run.
 
 ## Run
 
@@ -61,7 +67,7 @@ The generated policy panel uses YAML concepts such as `ingress_rules`, `egress_r
 
 ## Demo Flow
 
-The public demo opens on the adversarial run because it is the clearest 60-second story: prompt injection, sensitive file access, exfiltration, dangerous shell commands, and missing approval. The Lobster Log sample shows the stronger sponsor fit: inline policy events become a human-readable audit package.
+The public demo opens on the adversarial run because it is the clearest 60-second story: prompt injection, sensitive file access, exfiltration, dangerous shell commands, and missing approval. The Bounty Incident sample shows the motivating real-world case. The Lobster Log sample shows the sponsor fit: inline policy events become a human-readable audit package.
 
 ## Submission Checklist
 

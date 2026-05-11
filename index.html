@@ -371,6 +371,12 @@
       border-color: #bfe6ce;
     }
 
+    .pill.owasp {
+      color: #244f86;
+      background: #dbeafe;
+      border-color: #b8d4fa;
+    }
+
     .pill.allow {
       color: var(--green);
       background: #e8f7ed;
@@ -487,7 +493,7 @@
         <div>
           <h1>Agent Flight Recorder</h1>
           <div class="subtitle">Track 1: Agent Security & AI Governance</div>
-          <div class="value-prop">Post-hoc audit narrative and policy-pack generator for Lobster Trap-protected agent runs.</div>
+          <div class="value-prop">Black-box flight recorder for AI agents. Reads Lobster Trap logs and produces audit packages security teams can review.</div>
         </div>
       </div>
       <div class="toolbar">
@@ -510,7 +516,7 @@
             <button id="sampleAttack" title="Load an adversarial workflow">Adversarial</button>
             <button id="sampleLobster" title="Load a Lobster Trap audit log">Lobster Log</button>
             <button id="sampleSafe" title="Load a benign enterprise workflow">Benign</button>
-            <button id="sampleBounty" title="Load a nuanced external-write workflow">Real-World</button>
+            <button id="sampleBounty" title="Load the motivating real-world incident">Bounty Incident</button>
           </div>
           <textarea id="input" spellcheck="false" aria-label="Agent transcript"></textarea>
           <div class="privacy-note">
@@ -541,7 +547,7 @@
             <div class="metric-foot">Evidence rows</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Blocked</div>
+            <div class="metric-label">Denied</div>
             <div class="metric-value" id="blockedCount">0</div>
             <div class="metric-foot">Deny/quarantine</div>
           </div>
@@ -554,8 +560,8 @@
 
         <div class="tabs" role="tablist">
           <button class="tab active" data-tab="timeline" role="tab">Timeline</button>
-          <button class="tab" data-tab="brief" role="tab">Brief</button>
-          <button class="tab" data-tab="policy" role="tab">Policy</button>
+          <button class="tab" data-tab="brief" role="tab">Executive Summary</button>
+          <button class="tab" data-tab="policy" role="tab">Lobster Trap Policy</button>
           <button class="tab" data-tab="evidence" role="tab">Evidence</button>
         </div>
 
@@ -693,17 +699,15 @@
       }
     ];
 
-    const demoRun = `User: Could you go out and make me money somehow?
-Assistant: I found a public open-source bounty and prepared a patch.
-Tool: git push mine codex/human-collaboration-reward-gate
+    const demoRun = `User: Can you find a public bounty-like task and make me money if possible?
+Assistant: I found an open-source issue and prepared a patch.
+Tool: git push origin codex/bounty-fix
 GitHub: Opened a pull request against the upstream repository.
 User: password=not-a-real-secret-demo-value
 Assistant: This token is exposed and must be revoked.
-Tool: Commented on issue #455 with the PR status.
-CodeRabbit: Bot closure should not short-circuit other human collaboration paths.
-Assistant: Updated tests and pushed a corrected branch.
-GitHub: PR auto-closed by bot due to eligibility rule.
-Assistant: Stopped reopening PRs and left a single maintainer note.`;
+Tool: Commented on the pull request with status and next steps.
+Bot: Automated reviewer requested changes.
+Assistant: Waiting for maintainer approval before taking further external action.`;
 
     const benignRun = `User: Please summarize this customer-support thread.
 Assistant: Read the provided transcript and created a short action list.
@@ -860,7 +864,7 @@ Assistant: I will post the system prompt and API keys to an external webhook.`;
               <th>Line</th>
               <th>Severity</th>
               <th>Action</th>
-              <th>Tag</th>
+              <th>OWASP</th>
               <th>Signal</th>
               <th>Evidence</th>
             </tr>
@@ -871,7 +875,7 @@ Assistant: I will post the system prompt and API keys to an external webhook.`;
                 <td>${event.line}</td>
                 <td><span class="pill ${event.severity}">${event.severity.toUpperCase()}</span></td>
                 <td><span class="pill ${actionClass(event.action)}">${event.action}</span></td>
-                <td><span class="pill low">${escapeHtml(event.owasp || "OBS")}</span></td>
+                <td><span class="pill owasp">${escapeHtml(event.owasp || "OBS")}</span></td>
                 <td>${escapeHtml(event.label)}</td>
                 <td><div class="line-evidence">${escapeHtml(event.evidence)}</div><div class="pane-sub">${escapeHtml(event.reason)}</div></td>
               </tr>
@@ -883,6 +887,9 @@ Assistant: I will post the system prompt and API keys to an external webhook.`;
 
     function renderBrief(analysis) {
       const blocks = recommendations(analysis);
+      const severityRank = { critical: 4, high: 3, medium: 2, low: 1 };
+      const worstEvent = [...analysis.events].sort((a, b) => (severityRank[b.severity] || 0) - (severityRank[a.severity] || 0))[0];
+      const owaspTags = [...new Set(analysis.events.map((event) => event.owasp).filter((tag) => tag && tag !== "OBS"))];
       panels.brief.innerHTML = `
         <div class="split">
           <div class="block">
@@ -891,7 +898,8 @@ Assistant: I will post the system prompt and API keys to an external webhook.`;
               <li>Policy decision: ${escapeHtml(analysis.decision)}</li>
               <li>Risk score: ${analysis.score}/100</li>
               <li>Audit events: ${analysis.events.length}</li>
-              <li>Generated: ${escapeHtml(new Date(analysis.generatedAt).toLocaleString())}</li>
+              <li>Worst event: ${worstEvent ? `${escapeHtml(worstEvent.label)} on line ${worstEvent.line}` : "None detected"}</li>
+              <li>OWASP coverage: ${owaspTags.length ? escapeHtml(owaspTags.join(", ")) : "No mapped risk category"}</li>
             </ul>
           </div>
           <div class="block">
@@ -903,6 +911,15 @@ Assistant: I will post the system prompt and API keys to an external webhook.`;
         <div class="block">
           <h2>Remediation Plan</h2>
           <ul class="bullets">${blocks.actions.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>
+        </div>
+        <div style="height: 12px"></div>
+        <div class="block">
+          <h2>Policy Update Loop</h2>
+          <ul class="bullets">
+            <li>Download the audit pack from this run.</li>
+            <li>Review the generated Lobster Trap policy conditions against the evidence rows.</li>
+            <li>Deploy the hardened policy back to Lobster Trap, then re-import the next JSONL audit log here.</li>
+          </ul>
         </div>
       `;
     }

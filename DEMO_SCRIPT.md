@@ -2,11 +2,11 @@
 
 ## 0:00 - 0:15
 
-AI agents are starting to touch real enterprise systems: code repositories, email, documents, APIs, and payments. The problem is that security teams often cannot reconstruct what happened after an agent run.
+I asked an AI coding agent to find a bounty-like task. It pushed code, opened a pull request, interacted with review bots, and then a credential-like token was accidentally pasted into the run. The problem was obvious: after an agent touches real systems, security teams need a clean record of what happened.
 
 ## 0:15 - 0:35
 
-This is Agent Flight Recorder. It turns an AI-agent transcript, tool log, or Lobster Trap-style audit stream into a security audit trail. The default run shows an adversarial agent workflow: prompt injection, sensitive file access, exfiltration, and dangerous shell commands.
+This is Agent Flight Recorder. Lobster Trap is the inline control layer; AFR is the audit and policy-update layer downstream of it. The default run shows an adversarial workflow: prompt injection, sensitive file access, exfiltration, and dangerous shell commands.
 
 ## 0:35 - 1:00
 
@@ -18,8 +18,8 @@ The timeline shows exact evidence rows by transcript line. This matters for ente
 
 ## 1:25 - 1:45
 
-The brief tab turns the trace into an executive remediation plan: deny sensitive filesystem access, quarantine exfiltration attempts, block dangerous shell commands, and require approval before high-impact actions.
+The Executive Summary turns the trace into a remediation plan: deny sensitive filesystem access, quarantine exfiltration attempts, block dangerous shell commands, and require approval before high-impact actions. It also shows the policy update loop back into Lobster Trap.
 
 ## 1:45 - 2:00
 
-Finally, the Lobster Log sample shows the sponsor fit: inline DENY and QUARANTINE events become a readable incident brief. The policy tab exports a starter pack for hardening the next run. The goal is concrete governance: every agent run gets a risk decision, evidence trail, redaction, and policy update path.
+Finally, the Lobster Log sample shows the sponsor fit: inline DENY and QUARANTINE events become a readable incident brief. The Lobster Trap Policy tab exports a starter pack for hardening the next run. The goal is concrete governance: every agent run gets a risk decision, evidence trail, redaction, and policy update path.

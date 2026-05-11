@@ -14,6 +14,8 @@ Agent Flight Recorder turns an agent transcript, tool log, or Lobster Trap-style
 
 The prototype is intentionally practical: paste a transcript or load a policy audit log, click Analyze, and get an audit trail that a security, legal, or compliance team can review.
 
+The project was motivated by a real agent run: an AI coding agent was asked to find a bounty-like task, pushed code, opened a pull request, interacted with review bots, and then a credential-like token was accidentally pasted into the conversation. The run made the governance problem concrete: autonomous agents can take economic actions, write to external systems, and create confusing audit trails that humans must reconstruct later.
+
 ## Track
 
 Track 1: Agent Security & AI Governance.
@@ -41,7 +43,7 @@ The default demo uses a clear adversarial workflow:
 
 Agent Flight Recorder flags the run as critical because it includes prompt injection, sensitive file access, exfiltration, dangerous commands, and missing approval checkpoints.
 
-A second "Lobster Log" sample demonstrates the sponsor fit: inline DENY and QUARANTINE events from a policy proxy become a human-readable incident brief and policy-hardening queue.
+The "Bounty Incident" sample demonstrates the motivating real-world case. A second "Lobster Log" sample demonstrates the sponsor fit: inline DENY and QUARANTINE events from a policy proxy become a human-readable incident brief and policy-hardening queue.
 
 ## Technologies
 
@@ -62,6 +64,6 @@ Business value: Enterprises need proof, not vibes, before agents can operate in 
 
 Originality: Inline guardrails are necessary, but they are not the whole governance workflow. Agent Flight Recorder focuses on the post-run artifact: what the agent saw, what it did, what was risky, what was redacted, which inline policy event fired, and what policy should happen next.
 
-Presentation: The app is built for a simple live demo. Load the default run, show the DENY decision, walk the timeline, switch to the Lobster Log sample, then export the policy pack.
+Presentation: The app is built for a simple live demo. Lead with the real bounty incident, show the default DENY run, walk the timeline, switch to the Lobster Log sample, then export the policy pack.
 
 Technical value: The rules are deterministic and auditable, matching enterprise expectations and aligning with Lobster Trap's non-LLM inspection approach.
